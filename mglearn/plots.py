@@ -30,6 +30,8 @@ from .plot_dbscan import plot_dbscan
 from .plot_ridge import plot_ridge_n_samples
 # 010521 by blee
 #from .plot_ridge import plot_ridge_n_samples3
+#from t_Mod.plot_curve import plot_curve
+#from t_Mod.mod1 import add, sub
 
 __all__ = ['plot_linear_svc_regularization',
            "plot_animal_tree", "plot_tree_progressive",
@@ -69,4 +71,8 @@ __all__ = ['plot_linear_svc_regularization',
            'plot_dbscan',
            'plot_ridge_n_samples',
 #           'plot_ridge_n_samples3',
+#           'plot_curve',
+
+#           'add', 'sub'
+           # by blee 20210326
            ]
