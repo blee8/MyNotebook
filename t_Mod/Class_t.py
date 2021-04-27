@@ -409,18 +409,19 @@ def plot_xy(self, model=None, dset_name=None, plot_col='FlowHt', max_subplots=40
   if model is not None :
         fig, ax2 = plt.subplots(figsize =(7,3))
         ax2.margins(0.01)
-  fig, ax4 = plt.subplots(figsize=(7, 3))
+#  fig, ax4 = plt.subplots(figsize=(7, 3))
 
   fig, ax3 = plt.subplots(figsize =(5,5))
   ax3.margins(0.01)
 
   markers = ["o", "s", "D", "h"]
-  colors = ["red", "k", "blue", "green", "m", 'cyan', 'y', 'w']
+  colors = ["blue", "red", "green", "k",  "m", 'cyan', 'y', 'w']
 
   if dset_name is not None :
       data = [dataset]
   else :
-      data = [self.train, self.val, self.test]
+      data = [self.train, self.val]
+      #data = [self.train, self.val, self.test]
   for j, dataset in enumerate(data) :
       for i, batch in enumerate(dataset) :
             inputs, labels, lab = batch
@@ -447,8 +448,11 @@ def plot_xy(self, model=None, dset_name=None, plot_col='FlowHt', max_subplots=40
             max_n = min(max_subplots, len(inputs))
 #            if figures == 'True':
 #                fig, ax = plt.subplots(nrows, ncols=1, figsize = (12,fvsize), tight_layout = True)
-            ax2.plot(inputs[:, :, 0], inputs[:, :, plot_col_index],label='Inputs', marker='.', zorder=-10)
-            ax4.plot(inputs[:, :, 0], inputs[:, :, plot_col_index],label='Inputs', marker='.', zorder=-10)
+#            ax2.plot(inputs[:, :, 0], inputs[:, :, plot_col_index],label='Inputs', marker='.', zorder=-10)
+#            ax4.plot(inputs[:, :, 0], inputs[:, :, plot_col_index],label='Inputs', marker='.', zorder=-10)
+            ax2.scatter(inputs[:, :, 0], inputs[:, :, plot_col_index],label='Inputs', marker='.',
+                        color=colors[j], zorder=-10, facecolors='none')
+      #      ax4.scatter(inputs[:, :, 0], inputs[:, :, plot_col_index],label='Inputs', marker='.' )
 
             for n in range(max_n):
 #                if figures == 'True':
@@ -465,15 +469,14 @@ def plot_xy(self, model=None, dset_name=None, plot_col='FlowHt', max_subplots=40
 #                        ax[n].scatter(lab[n,:, 0], labels[n, :, label_col_index],
 #                        edgecolors='k', label='Labels', c='#2ca02c', s=64)
                 if model is not None:
-                      ax2.scatter(lab[n,:,0], labels[n, :, label_col_index],
-                       #      marker = 'o', edgecolors = colors[0], c='#2ca02c',  s=25, zorder=2 )
-                      edgecolors = colors[j], c = '#2ca02c', s = 25, zorder = 2, label='Labels' )
+                      #ax2.scatter(lab[n,:,0], labels[n, :, label_col_index],
+                      #       marker = 'o', color = colors[j+4], facecolors='none',   zorder=2,
+                      #          label='Labels' )
 
                       #ax2.plot(lab[n,:,0], labels[n, :, label_col_index], 'r-', zorder=1.5 )
 
                       ax2.scatter(lab[n,:, 0],   predictions[n, :, label_col_index], label='Predictions',
-#                           marker='X', edgecolors='k', facecolors='none',  c='#ff7f0e', s=16)
-                          marker=',',  edgecolors='k', facecolors='none', c='#ff7f0e', s=16,zorder=3 )
+                           marker='o',  color = 'red', facecolors='none', s=8)
 
                       ax3.scatter(predictions[n, :, label_col_index], labels[n, :, label_col_index],
                                 color = colors[j],  facecolors='none', marker = '.')
@@ -491,11 +494,11 @@ def plot_xy(self, model=None, dset_name=None, plot_col='FlowHt', max_subplots=40
                         x_min = x_min_tmp
                         x_min_0 = x_min_tmp
 
-            ax4.scatter(lab[:, :, label_col_index], labels[:, :, label_col_index],
-                  edgecolors='g', c='#2ca02c', s=25, zorder=2, label='Labels')
+ #           ax4.scatter(lab[:, :, label_col_index], labels[:, :, label_col_index],
+ #                 edgecolors='g', c='#2ca02c', s=25, zorder=2, label='Labels')
             #ax4.plot(lab[:, :, label_col_index], labels[:, :, label_col_index], 'r-', zorder=1.5)
-            ax4.scatter(lab[:, :, label_col_index], predictions[:, :, label_col_index], label='Predictions',
-                  marker=',', edgecolors='k', facecolors='none', c='#ff7f0e', s=16, zorder=3)
+#            ax4.scatter(lab[:, :, label_col_index], predictions[:, :, label_col_index], label='Predictions',
+#                  marker=',', edgecolors='k', facecolors='none', c='#ff7f0e', s=16, zorder=3)
 
             if n_batch is not None :
                     if n_batch <= i :
@@ -506,8 +509,8 @@ def plot_xy(self, model=None, dset_name=None, plot_col='FlowHt', max_subplots=40
                 continue
             x_max_0 = x_max.copy()
             x_min_0 = x_min.copy()
-      if j==0 and i==0 :
-        ax4.legend()
+ #     if j==0 and i==0 :
+ #       ax4.legend()
 
 #    ax3.set_ylim (self.train_df['FlowHt'].min(0)-0.2,
 #                self.test_df['FlowHt'].max(0)+1.0)
@@ -529,12 +532,52 @@ def plot_xy(self, model=None, dset_name=None, plot_col='FlowHt', max_subplots=40
 # ax3.invert_xaxis()
 
   ax2.invert_xaxis()
-  ax4.invert_xaxis()
+#  ax4.invert_xaxis()
 
-
+  return(ax2, ax3)
 #  if i == 0: ax2.legend()
 
 WinGen.plot_xy = plot_xy
 
 
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+def plot_4(self, model=None, plot_col='FlowHt', max_subplots=40, n_batch=None) :
+#def plot_batch(self, model=None, dset_name=None, plot_col='FlowHt', max_subplots=40, n_batch=None,
+#                   figures=None, xy_fig=None):
+    ax = plt.gca()
+
+    for i, batch in enumerate(self.train) :
+
+            inputs, labels, lab = batch
+            nrows = len(inputs)
+            predictions = model(inputs)
+
+            plot_col_index = self.column_indices[plot_col]
+            max_n = min(max_subplots, len(inputs))
+            for n in range(max_n):
+                ax.plot(inputs[n, :, 0], inputs[n, :, plot_col_index], label='Inputs', marker='.', zorder=-10)
+            #    ax.text(0.9,0.1, "n = {}".format(n), fontdict =font, ha="center", transform=ax[n].transAxes)
+                if self.label_columns:
+                        label_col_index = self.label_columns_indices.get(plot_col, None)
+                else:
+                        label_col_index = plot_col_index
+                if label_col_index is None:
+                        continue
+
+                ax.scatter(lab[n,:, 0], labels[n, :, label_col_index],
+                           edgecolors='k', label='Labels', c='#2ca02c', s=64)
+
+                # predictions = model(inputs)
+                ax.scatter(lab[n,:, 0],  predictions[n, :, label_col_index],
+                                  marker='X', edgecolors='k', label='Predictions',
+                                        facecolors='none',  c='#ff7f0e', s=64)
+
+                self.train_df.iloc[i*n][plot_col_index] = predictions[n, :, label_col_index]
+
+
+    ax.invert_xaxis()
+
+
+WindowGenerator.plot_4 = plot_4
 
