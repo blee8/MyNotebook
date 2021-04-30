@@ -2,7 +2,7 @@ import tensorflow as tf
 
 from t_Mod import plots_t
 
-MAX_EPOCHS = 50
+MAX_EPOCHS = 300
 
 def compile_and_fit(model, window, patience=2):
   early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss',

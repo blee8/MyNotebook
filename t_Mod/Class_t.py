@@ -13,9 +13,12 @@ class WindowGenerator():
                train_df=None, val_df=None, test_df=None,
                label_columns=None):
     # Store the raw data.
-    self.train_df = train_df
-    self.val_df = val_df
-    self.test_df = test_df
+    if train_df is not None:
+        self.train_df = train_df
+    if val_df is not None:
+        self.val_df = val_df
+    if test_df is not None:
+        self.test_df = test_df
 
     # Work out the label column indices.
     self.label_columns = label_columns
@@ -119,9 +122,12 @@ class WinGen():
                train_df=None, val_df=None, test_df=None,
                label_columns=None):
     # Store the raw data.
-    self.train_df = train_df
-    self.val_df = val_df
-    self.test_df = test_df
+    if train_df is not None:
+        self.train_df = train_df
+    if val_df is not None:
+        self.val_df = val_df
+    if test_df is not None:
+        self.test_df = test_df
 
     # Work out the label column indices.
     self.label_columns = label_columns
@@ -475,10 +481,11 @@ def plot_xy(self, model=None, dset_name=None, plot_col='FlowHt', max_subplots=40
 
                       #ax2.plot(lab[n,:,0], labels[n, :, label_col_index], 'r-', zorder=1.5 )
 
-                      ax2.scatter(lab[n,:, 0],   predictions[n, :, label_col_index], label='Predictions',
-                           marker='o',  color = 'red', facecolors='none', s=8)
+                     # ax2.scatter(lab[n,:, 0],   predictions[n, :, label_col_index], label='Predictions',
+                      ax2.scatter(lab[n, :, 0], predictions[n, :, plot_col_index], label='Predictions',
+                                              marker='o',  color = 'red', facecolors='none', s=8)
 
-                      ax3.scatter(predictions[n, :, label_col_index], labels[n, :, label_col_index],
+                      ax3.scatter(predictions[n, :, plot_col_index], labels[n, :, label_col_index],
                                 color = colors[j],  facecolors='none', marker = '.')
 
                       l_max = np.array([tf.reduce_max(labels)])
